@@ -1,0 +1,5 @@
+<!-- via emit() we pass event to parent component -->
+<img [src]="postImg" alt="" (click)="imgSelected.emit(postImg)">
+
+<!-- we pass content from parent component it will search for content inserted in our compnent tags -->
+<ng-content></ng-content>

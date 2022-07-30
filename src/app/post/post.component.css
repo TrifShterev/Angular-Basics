@@ -1,0 +1,10 @@
+img{
+    width: 200px;
+    height: 200px;
+}
+
+/* will aply these styles wraped around templates (the parent) 
+in our case on the tsxt "Some caption"*/
+:host{
+font-size: 24px;
+}
