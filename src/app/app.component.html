@@ -4,10 +4,56 @@
      when that happens it will trigger the finc logImg() the data emmited from the child will be stored in the event
     and then we can pass it to the component.ts file this is how comunication from child to parent happens
 in Angular -->
-<app-post [img]="imgUrl" (imgSelected)="logImg($event)">
+<app-post *ngFor="let image of images let i = index" [img]="imgUrl" (imgSelected)="logImg($event)">
     <p>Some caption</p>
 </app-post>
 
-<p>Hello {{name.toUpperCase() }}</p>
+
+<!-- PIPES IN ANGULAR  are kind of ready to use functions which transforms data-->
+<p>Hello {{name | titlecase }}</p>
 <p>Hello {{getName() }}!</p>
 <p>{{15+13 +22}}</p>
+<p>{{currentDate | date: 'd/M/yy, h:mm a'}}</p>
+<p>{{cost | currency: 'EUR'}}</p>
+
+<!-- this pipe will show as decimal every number
+the parameter before "." describes the minimum digits
+should be shown at the left side of the number,
+the right parameter describes min and max number of digits
+should be shown at the right side of the number.
+Ако числата са по малко от посочените в десния параметър (2),
+ще покаже "0" а ако са повече от максимално допустимите (5) ще ги закръгли към последния знак. -->
+<p>{{temperature | number: '1.2-5'}}</p>
+
+<!-- this pipe is useful for debugging - shows the content of an object-->
+<pre>{{pizza | json}}</pre>
+
+
+<!-- Directives in Angular are ready to use functions- they are 2 types -Atribute directives(changes appearence or behavior of an element)
+-Structural directives(add or remove elements from the DOM)-->
+
+<hr>
+<!-- Atribute directives -
+    ngClass directive -will add the CSS class ".blue" to the button
+ depend on what is the value (true or false) of the boolean "blueClass"
+
+-ngStyle directive - changes style of an element 
+- За да работи трябва да са зададени мерните единици на бинднатата променлива като string,
+ но те могат да се зададат и директно в CSS класът на директивата, както е в случая по долу(.px)-->
+<button (click)="blueClass = !blueClass" [ngClass]="{blue:blueClass}"
+    [ngStyle]="{'font-size.px':fontSize}">Change</button>
+<hr>
+<!-- Structural directives 
+    ngIf directive - works as conditional statement
+    ngfor directive - works as a loop and will render the HTML element based on the elements in the array.
+     <app-post *ngFor="let image of images let i = index"> where "i" is the index of each elemnt in the array
+Каквото е в <ng-template> таг няма да се покаже в браузъра но Ангулар ще задели памет за него в случай че бързо трябва ДА ГО ПОКАЖе-->
+<ng-template [ngIf]="blueClass">
+    <p>Button is blue.</p>
+</ng-template>
+
+<!-- Това е съкратен синтаксис на това по горе,
+когато поставим "*" пред structural directive
+Ангулар автоматично поставя елемента в <ng-template> и в [] директивата -->
+<p *ngIf="blueClass">Button is blue.</p>
+<hr>
